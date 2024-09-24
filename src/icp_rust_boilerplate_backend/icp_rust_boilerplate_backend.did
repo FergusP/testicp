@@ -1,21 +1,27 @@
 type Error = variant { NotFound : record { msg : text } };
-type Message = record {
+type Product = record {
   id : nat64;
-  title : text;
-  updated_at : opt nat64;
-  body : text;
-  created_at : nat64;
-  attachment_url : text;
+  status : text;
+  name : text;
+  origin : text;
+  current_location : text;
+  certification : opt text;
+  timestamp : nat64;
+  iot_data : opt text;
+  last_update : opt nat64;
 };
-type MessagePayload = record {
-  title : text;
-  body : text;
-  attachment_url : text;
+type ProductPayload = record {
+  status : text;
+  name : text;
+  origin : text;
+  current_location : text;
+  certification : opt text;
+  iot_data : opt text;
 };
-type Result = variant { Ok : Message; Err : Error };
+type Result = variant { Ok : Product; Err : Error };
 service : {
-  add_message : (MessagePayload) -> (opt Message);
-  delete_message : (nat64) -> (Result);
-  get_message : (nat64) -> (Result) query;
-  update_message : (nat64, MessagePayload) -> (Result);
+  add_product : (ProductPayload) -> (opt Product);
+  delete_product : (nat64) -> (Result);
+  get_product : (nat64) -> (Result) query;
+  update_product : (nat64, ProductPayload) -> (Result);
 }
